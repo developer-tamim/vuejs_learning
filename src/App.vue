@@ -7,8 +7,9 @@
   <button @click="number++">Increase me</button>
   <button @click="number--">Decrease me</button>
 <button @click.shift="toggleModal">Show Modal</button>
+<button @click="toggleModalTwo">Show Modal Two</button>
 
-<div v-if="showmodal">
+<teleport to=".modal" v-if="showmodal">
   <!-- <Modal :header="header" :text="text" theme="sale" @close="toggleModal"/> -->
   <Modal theme="" @close="toggleModal">
     <template v-slot:link>
@@ -21,7 +22,21 @@
     <h1>This is called Slot</h1>
     <p>this is just a test of the slot</p>
   </Modal>
-</div>
+</teleport>
+
+<teleport to=".modal" v-if="showmodalTwo">
+  <!-- <Modal :header="header" :text="text" theme="sale" @close="toggleModal"/> -->
+  <Modal @close="toggleModalTwo">
+    <h1>Slot from second</h1>
+    <p>this is just a test of the second slot</p>
+    <form action="">
+      <input type="text" placeholder="Name">
+      <input type="email" placeholder="Email">
+      <input type="password" placeholder="Password">
+      <button type="submit">Submit</button>
+    </form>
+  </Modal>
+</teleport>
 
 </template>
 
@@ -42,12 +57,16 @@ export default {
       header: 'Sign up for Giveaway',
       text: 'Grab your text',
       showmodal: false,
+      showmodalTwo: false,
     }
   },
 
   methods: {
     toggleModal(){
       this.showmodal =!this.showmodal
+    },
+    toggleModalTwo(){
+      this.showmodalTwo =!this.showmodalTwo
     }
   }
 
@@ -55,7 +74,7 @@ export default {
 </script>
 
 <style>
-#app {
+#app, .modal {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
